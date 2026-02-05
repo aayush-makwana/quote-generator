@@ -18,23 +18,30 @@
   </div>
 
   <script>
-
+    const api_key = "0sZXoZ0gE0E7TmVJtm55WKGrmNQS9GSLDkEpLQje";
     const quote = document.getElementById("quote");
     const author = document.getElementById("author");
-    const api_url = "https://api.quotable.io/random";
+    const api_url = "https://api.api-ninjas.com/v2/randomquotes";
 
     async function getQuote(url) {
-      const response = await fetch(url);
+      quote.innerHTML = "Loading...";
+      author.innerHTML = "Loading...";
+
+      const response = await fetch(url, {
+        "headers":{
+          "X-Api-Key": api_key
+        }
+      });
       let data = await response.json();
-      console.log(data);
-      quote.innerHTML = data.content;
-      author.innerHTML = data.author;
+
+      quote.innerHTML = data[0].quote;
+      author.innerHTML = data[0].author;
     }
 
     getQuote(api_url);
 
     function tweet() {
-      window.open("https://twitter.com/intent/tweet?text=" + quote.innerHTML + " --- by " + author.innerHTML, "Tweet Window", "width=600, height=300");
+      window.open("https://x.com/intent/post?text=" + quote.innerHTML + " --- by " + author.innerHTML, "Tweet Window", "width=600, height=300");
     }
 
   </script>
